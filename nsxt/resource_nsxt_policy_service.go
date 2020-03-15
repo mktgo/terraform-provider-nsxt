@@ -5,6 +5,9 @@ package nsxt
 
 import (
 	"fmt"
+	"log"
+	"strconv"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -12,8 +15,6 @@ import (
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/infra"
 	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"log"
-	"strconv"
 )
 
 func resourceNsxtPolicyService() *schema.Resource {
@@ -624,7 +625,7 @@ func resourceNsxtPolicyServiceDelete(d *schema.ResourceData, m interface{}) erro
 	client := infra.NewDefaultServicesClient(connector)
 	err := client.Delete(id)
 	if err != nil {
-		err = handleDeleteError("Service", id, err)
+		return handleDeleteError("Service", id, err)
 	}
 
 	return nil
